@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { StyleSheet, View, SectionList, Text, Platform, Alert } from 'react-native'
 
 
-export default class Weeks extends React.Component {
+export default class WeekList extends React.Component {
 
     GetSectionListItem=(item)=>{
         Alert.alert(item)
