@@ -1,14 +1,8 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux'
-import thunk from 'redux-thunk'
-import weekListReducer from "./reducers/weekListReducer";
+import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
+import thunkMiddleware from "redux-thunk";
+import rootReducer from '../reducers';
 
-const rootReducer = combineReducers({
-    weekListReducer: weekListReducer
-})
-
-
-const configureStore = (env, history) => {
-    return  createStore(rootReducer, applyMiddleware(thunk));
-};
+const configureStore = createStore(rootReducer, applyMiddleware(thunkMiddleware)
+);
 
 export default configureStore;

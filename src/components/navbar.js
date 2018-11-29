@@ -14,7 +14,7 @@ export default class Navbar extends Component {
 const styles = StyleSheet.create({
 
     NavBarStyle:{
-        height: (Platform.OS) == 'ios' ? 98 : 90,
+        height:  98,
         backgroundColor: 'whitesmoke',
         justifyContent:'space-around',
         marginVertical: 10,

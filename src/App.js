@@ -1,16 +1,20 @@
 import React, {Component} from 'react';
-import { StyleSheet, View } from 'react-native'
-import Navbar from './navbar'
-import WeekList from './week-list'
+import {Provider} from 'react-redux';
+import { StyleSheet, View } from 'react-native';
+import Navbar from './components/navbar';
+import WeekList from './components/week-list';
+import configureStore from './configureStore';
 
 export default class App extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <Navbar/>
-                <WeekList/>
-            </View>
+            <Provider store={configureStore}>
+                <View style={styles.container}>
+                    <Navbar/>
+                    <WeekList/>
+                </View>
+            </Provider>
         );
     }
 }
