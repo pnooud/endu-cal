@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export function getWeeks(startDate, endDate) {
     return (dispatch) => {
         dispatch(getWeeksIsLoading(true));

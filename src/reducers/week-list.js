@@ -29,6 +29,3 @@ export function weekList(state = [], action) {
             return state;
     }
 }
-
-
-export default weekListReducer;

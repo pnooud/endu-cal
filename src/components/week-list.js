@@ -15,25 +15,25 @@ export class WeekList extends React.Component {
     //     Alert.alert(item)
     // }
 
-    state = {selected: (new Map()}
+    //state = {selected: (new Map()}
 
     _keyExtractor = (item, index) => item.startDate;
 
-    _onPressItem = (id) => {
-        // updater functions are preferred for transactional updates
-        this.setState((state) => {
-            // copy the map rather than modifying state.
-            const selected = new Map(state.selected);
-            selected.set(id, !selected.get(id)); // toggle
-            return {selected};
-        });
-    };
+    // _onPressItem = (id) => {
+    //     // updater functions are preferred for transactional updates
+    //     this.setState((state) => {
+    //         // copy the map rather than modifying state.
+    //         const selected = new Map(state.selected);
+    //         selected.set(id, !selected.get(id)); // toggle
+    //         return {selected};
+    //     });
+    // };
 
     _renderItem = ({item}) => (
         <MyListItem
             id={item.startDate}
-            onPressItem={this._onPressItem}
-            selected={!!this.state.selected.get(item.startDate)}
+            //onPressItem={this._onPressItem}
+            //selected={!!this.state.selected.get(item.startDate)}
             title={item.startDate}
         />
     );
