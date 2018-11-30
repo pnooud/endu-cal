@@ -3,7 +3,7 @@ import { StyleSheet, View, SectionList, FlatList, Text, Platform, Alert } from '
 import { connect } from 'react-redux';
 import { handleActions } from 'redux-actions';
 import * as actions from '../actions/action-types';
-import {getWeeks} from "../actions/action-types";
+import {getWeeks, getWeeksHasErrored, weekListIsLoading} from "../actions/action-types";
 
 
 export class WeekList extends React.Component {
@@ -47,7 +47,9 @@ export class WeekList extends React.Component {
 
         return (
 
+
                 <View style={{ marginTop :  20 }}>
+               
                     {/*<SectionList*/}
                         {/*sections={[*/}
                             {/*{ title: 'January', data: jan },*/}
@@ -92,7 +94,7 @@ const styles = StyleSheet.create({
 // start of code change
 const mapStateToProps = (state) => {
     return { 
-        weeks: state.weekList, 
+        weekList: state.weekList, 
         hasErrored: state.weekListHasErrored, 
         isLoading: state.weekListIsLoading 
     };

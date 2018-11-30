@@ -1,5 +1,5 @@
 // const initialState = {
-//     weeks: [],
+//     weekList: [],
 //     hasErrored: false,
 //     isLoading: false
 // };
@@ -24,7 +24,7 @@ export function weekListIsLoading(state = false, action) {
 export function weekList(state = [], action) {
     switch (action.type) {
         case 'GET_WEEKS_DATA_SUCCESS':
-            return action.items;
+            return action.weekList;
         default:
             return state;
     }

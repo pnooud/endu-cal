@@ -4,9 +4,16 @@ export function getWeeks(startDate, endDate) {
     return (dispatch) => {
         dispatch(getWeeksIsLoading(true));
 
-        getTrainingWeeks(startDate, endDate)
-            .then((weeks) => dispatch(getWeeksFetchDataSuccess(weeks)))
-            .catch(() => dispatch(getWeeksHasErrored(true)));
+        let weeks = getTrainingWeeks(startDate, endDate);
+            
+        if (weeks.length == 0){
+            dispatch(getWeeksHasErrored(true));
+        }
+        else{
+            dispatch(getWeeksFetchDataSuccess(weeks));
+            dispatch(getWeeksIsLoading(false));
+        }
+       // return weeks;
     };
 }
 
@@ -22,10 +29,10 @@ export function getWeeksIsLoading(bool) {
         isLoading: bool
     };
 }
-export function getWeeksFetchDataSuccess(items) {
+export function getWeeksFetchDataSuccess(weekList) {
     return {
         type: 'GET_WEEKS_DATA_SUCCESS',
-        items
+        weekList
     };
 }
 
@@ -37,10 +44,10 @@ var getTrainingWeeks = function (startDate, endDate) {
     weeks.push(currentDate);
 
     while (currentDate.startDate < moment(endDate)) {
-        currentDate = getTrainingWeek(moment(currentDate.startDate).add(7, 'days'));
+        let nextDate = moment(currentDate.startDate).add(7, 'days');
+        currentDate = getTrainingWeek(nextDate);
         weeks.push(currentDate);
     }
-
     return weeks;
 };
 
