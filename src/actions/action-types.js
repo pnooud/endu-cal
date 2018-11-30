@@ -3,17 +3,19 @@ import moment from 'moment';
 export function getWeeks(startDate, endDate) {
     return (dispatch) => {
         dispatch(getWeeksIsLoading(true));
+        console.log('IsLoading true');
 
         let weeks = getTrainingWeeks(startDate, endDate);
-            
+        console.log('Weeks: ' + weeks);
         if (weeks.length == 0){
+            console.log('errored');
             dispatch(getWeeksHasErrored(true));
         }
         else{
+            console.log('ok');
             dispatch(getWeeksFetchDataSuccess(weeks));
             dispatch(getWeeksIsLoading(false));
         }
-       // return weeks;
     };
 }
 
@@ -53,6 +55,7 @@ var getTrainingWeeks = function (startDate, endDate) {
 
 var getTrainingWeek = function (date) {
     return {
+        key: moment(date).isoWeek(),
         untilARace: 0,
         untilBRace: 0,
         untilCRace: 0,

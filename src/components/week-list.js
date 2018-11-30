@@ -1,77 +1,47 @@
 import React, {Component} from 'react';
+import TouchableOpacity from 'react-native';
+import PropTypes from 'prop-types';
 import { StyleSheet, View, SectionList, FlatList, Text, Platform, Alert } from 'react-native';
 import { connect } from 'react-redux';
-import { handleActions } from 'redux-actions';
-import * as actions from '../actions/action-types';
-import {getWeeks, getWeeksHasErrored, weekListIsLoading} from "../actions/action-types";
+import {getWeeks} from "../actions/action-types";
 
 
-export class WeekList extends React.Component {
+export class WeekList extends Component {
 
     componentDidMount() {
-        this.props.fetchData(Date.now(), '2019-01-01');
+        this.props.fetchData(Date.now(), '2019-05-01');
     }
-    // GetSectionListItem=(item)=>{
-    //     Alert.alert(item)
-    // }
-
-    //state = {selected: (new Map()}
-
-    _keyExtractor = (item, index) => item.startDate;
-
-    // _onPressItem = (id) => {
-    //     // updater functions are preferred for transactional updates
-    //     this.setState((state) => {
-    //         // copy the map rather than modifying state.
-    //         const selected = new Map(state.selected);
-    //         selected.set(id, !selected.get(id)); // toggle
-    //         return {selected};
-    //     });
-    // };
-
-    _renderItem = ({item}) => (
-        <MyListItem
-            id={item.startDate}
-            //onPressItem={this._onPressItem}
-            //selected={!!this.state.selected.get(item.startDate)}
-            title={item.startDate}
-        />
-    );
 
     render() {
+        if (this.props.hasErrored) {
+            return <Text>Sorry! There was an error loading the items</Text>;
+        }
 
-        // var jan = ['RR 3 miles', 'SR 4 miles', 'B Race'] ;
-        // var feb = ['BFR 5 miles', 'LR 15 miles', 'Chester Marathon'] ;
-        // var mar = [ 'A Race'] ;
-
+        if (!this.props.weekList || this.props.isLoading) {
+            return <Text>Loading…</Text>;
+        }
 
         return (
-
-
-                <View style={{ marginTop :  20 }}>
-               
-                    {/*<SectionList*/}
-                        {/*sections={[*/}
-                            {/*{ title: 'January', data: jan },*/}
-                            {/*{ title: 'February', data: feb },*/}
-                            {/*{ title: 'March', data: mar },*/}
-                        {/*]}*/}
-
-                        {/*renderSectionHeader={ ({section}) => <Text style={styles.SectionHeaderStyle}> { section.title } </Text> }*/}
-                        {/*renderItem={ ({item}) => <Text style={styles.SectionListItemStyle} onPress={this.GetSectionListItem.bind(this, item)}> { item } </Text> }*/}
-                        {/*keyExtractor={ (item, index) => index }*/}
-                    {/*/>*/}
-                    <FlatList
-                        data={this.weekList}
-                        keyExtractor={this._keyExtractor}
-                        renderItem={this._renderItem}
-                    />
-                </View>
-
+            <View>{console.log(this.props.weekList)}
+            {
+                
+                this.props.weekList.map(item => (
+                    <Text key = {item.key}>
+                        {item.startDate.toISOString()}
+                    </Text>
+                ))
+            }
+            </View>
         );
     }
 }
 
+WeekList.propTypes = {
+    fetchData: PropTypes.func.isRequired,
+    weekList: PropTypes.array.isRequired,
+    hasErrored: PropTypes.bool.isRequired,
+    isLoading: PropTypes.bool.isRequired
+};
 
 const styles = StyleSheet.create({
 
@@ -91,7 +61,6 @@ const styles = StyleSheet.create({
     }
 });
 
-// start of code change
 const mapStateToProps = (state) => {
     return { 
         weekList: state.weekList, 
