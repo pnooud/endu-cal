@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import TouchableOpacity from 'react-native';
 import PropTypes from 'prop-types';
-import { StyleSheet, View, SectionList, FlatList, Text, Platform, Alert } from 'react-native';
+import { StyleSheet, ScrollView, SectionList, FlatList, Text, Platform, Alert, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import {getWeeks} from "../actions/action-types";
 
@@ -22,16 +21,17 @@ export class WeekList extends Component {
         }
 
         return (
-            <View>{console.log(this.props.weekList)}
+            <ScrollView style={styles.container}>
             {
-                
                 this.props.weekList.map(item => (
-                    <Text key = {item.key}>
-                        {item.startDate.toISOString()}
-                    </Text>
+                    <TouchableOpacity key={item.key} style={styles.button}>
+                        <Text>
+                            {item.title}
+                        </Text>
+                    </TouchableOpacity>
                 ))
             }
-            </View>
+            </ScrollView>
         );
     }
 }
@@ -44,21 +44,13 @@ WeekList.propTypes = {
 };
 
 const styles = StyleSheet.create({
-
-    SectionHeaderStyle:{
-        backgroundColor : '#CDDC39',
-        fontSize : 20,
-        padding: 5,
-        color: '#fff',
-    },
-
-    SectionListItemStyle:{
-        fontSize : 15,
-        padding: 5,
-        color: '#000',
-        backgroundColor : '#F5F5F5'
-
-    }
+      button: {
+        alignItems: 'left',
+        backgroundColor: '#DDDDDD',
+        padding: 10,
+        backgroundColor: 'whitesmoke',
+        marginTop:5
+      } 
 });
 
 const mapStateToProps = (state) => {

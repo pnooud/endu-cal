@@ -14,11 +14,13 @@ export default class Navbar extends Component {
 const styles = StyleSheet.create({
 
     NavBarStyle:{
-        height:  98,
+        height:  72,
         backgroundColor: 'whitesmoke',
         justifyContent:'space-around',
-        marginVertical: 10,
-        alignItems: 'center'
+        marginVertical: 15,
+        alignItems: 'center',
+        borderBottomWidth :1,
+        borderBottomColor: 'lightgray',
     },
     NavBarTitleStyle:{
         fontFamily: 'Palatino',

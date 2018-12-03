@@ -55,7 +55,8 @@ var getTrainingWeeks = function (startDate, endDate) {
 
 var getTrainingWeek = function (date) {
     return {
-        key: moment(date).isoWeek(),
+        key: moment(date).year().toString().concat(moment(date).isoWeek()),
+        title:  moment(date).format('MMMM Do YYYY'),
         untilARace: 0,
         untilBRace: 0,
         untilCRace: 0,
