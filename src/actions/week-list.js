@@ -68,14 +68,13 @@ var getRacesForWeek = function(startDate){
 var getWeeksToRaces = function(startDate){
 
     let start = moment(startDate).startOf('isoweek');
-    let race = moment(startDate).endOf('isoweek');
 
     return races.map( r => (Object.assign({}, r, {weeksToRace: Math.round(moment.duration(moment(r.startDate).startOf('isoweek').diff(start)).asWeeks())})));
 };
 
 var getTrainingWeeks = function (startDate, endDate) {
 
-    let weeks = new Array();
+    let weeks = [];
     let currentDate = getTrainingWeek(startDate);
 
     weeks.push(currentDate);
@@ -88,12 +87,27 @@ var getTrainingWeeks = function (startDate, endDate) {
     return weeks;
 };
 
+var getClosest = function(date, importance)
+{
+    // {weeksToRace: Math.round(moment.duration(moment(r.startDate).startOf('isoweek').diff(start)).asWeeks())};
+    // var max = races.reduce(function(prev, current) {
+    //     if (+current.id < +prev.id) {
+    //         return current;
+    //     } else {
+    //         return prev;
+    //     }
+    // });
+}
+
 var getTrainingWeek = function (date) {
     return {
         key: moment(date).year().toString().concat(moment(date).isoWeek()),
         title: moment(date).format('MMMM Do YYYY'),
         races: getRacesForWeek(date),
         timeToRaces: getWeeksToRaces(date),
+        // closestA: getClosest(date, 'A'),
+        // closestB: getClosest(date, 'B'),
+        // closestC: getClosest(date, 'C'),
         startDate: moment(date).startOf('isoweek')
     };
 };
