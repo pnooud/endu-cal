@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, ScrollView, SectionList, FlatList, Text, Platform, Alert, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import {getWeeks} from "../actions/action-types";
+import {getWeeks} from "../actions/week-list";
 
 
 export class WeekList extends Component {
@@ -21,10 +21,11 @@ export class WeekList extends Component {
         }
 
         return (
-            <ScrollView style={styles.container}>
+            
+            <ScrollView style={styles.container}>{console.log(this.props.weekList)}
             {
                 this.props.weekList.map(item => (
-                    <TouchableOpacity key={item.key} style={styles.button}>
+                    <TouchableOpacity key={item.key} style={item.races.length == 0 ? styles.button : styles.aRace}>
                         <Text>
                             {item.title}
                         </Text>
@@ -46,9 +47,14 @@ WeekList.propTypes = {
 const styles = StyleSheet.create({
       button: {
         alignItems: 'left',
-        backgroundColor: '#DDDDDD',
         padding: 10,
         backgroundColor: 'whitesmoke',
+        marginTop:5
+      } ,
+      aRace: {
+        alignItems: 'left',
+        padding: 10,
+        backgroundColor: 'red',
         marginTop:5
       } 
 });

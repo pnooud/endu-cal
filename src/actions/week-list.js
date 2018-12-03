@@ -38,6 +38,41 @@ export function getWeeksFetchDataSuccess(weekList) {
     };
 }
 
+var races = 
+    [
+        {
+            name: 'Marathon des Sables',
+            startDate: moment('2019-04-05 12:00'),  
+            endDate: moment('2019-04-15 09:00'), 
+            raceType: 'ultra',
+            importance: 'A'
+        },
+        {
+            name: 'Chester Ultra',
+            startDate: moment('2019-03-02 08:00'),  
+            endDate: moment('2019-03-02 18:00'), 
+            raceType: 'ultra',
+            importance: 'B'
+        }
+
+    ];
+
+var getRacesForWeek = function(startDate){
+
+    let start = moment(startDate).startOf('isoweek');
+    let end = moment(startDate).endOf('isoweek');
+
+    return races.filter(r => r.startDate.isBetween(start, end));
+};
+
+var getWeeksToRaces = function(startDate){
+
+    let start = moment(startDate).startOf('isoweek');
+    let race = moment(startDate).endOf('isoweek');
+
+    return races.map( r => (Object.assign({}, r, {weeksToRace: Math.round(moment.duration(moment(r.startDate).startOf('isoweek').diff(start)).asWeeks())})));
+};
+
 var getTrainingWeeks = function (startDate, endDate) {
 
     let weeks = new Array();
@@ -56,10 +91,9 @@ var getTrainingWeeks = function (startDate, endDate) {
 var getTrainingWeek = function (date) {
     return {
         key: moment(date).year().toString().concat(moment(date).isoWeek()),
-        title:  moment(date).format('MMMM Do YYYY'),
-        untilARace: 0,
-        untilBRace: 0,
-        untilCRace: 0,
+        title: moment(date).format('MMMM Do YYYY'),
+        races: getRacesForWeek(date),
+        timeToRaces: getWeeksToRaces(date),
         startDate: moment(date).startOf('isoweek')
     };
 };
