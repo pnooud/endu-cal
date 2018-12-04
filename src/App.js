@@ -24,7 +24,6 @@ const styles = StyleSheet.create({
         container: {
             backgroundColor: '#fff',
             flex: 2,
-            margin:0,
             flexDirection: 'column',
             alignItems: 'stretch',
         }

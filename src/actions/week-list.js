@@ -53,6 +53,13 @@ var races =
             endDate: moment('2019-03-02 18:00'), 
             raceType: 'ultra',
             importance: 'B'
+        },
+        {
+            name: 'Gran Canaria Maratón',
+            startDate: moment('2019-01-27 12:00'),  
+            endDate: moment('2019-01-27 16:00'), 
+            raceType: 'marathon',
+            importance: 'C'
         }
 
     ];
@@ -65,11 +72,15 @@ var getRacesForWeek = function(startDate){
     return races.filter(r => r.startDate.isBetween(start, end));
 };
 
-var getWeeksToRaces = function(startDate){
+var getWeeksToRaces = function(fromDate){
 
-    let start = moment(startDate).startOf('isoweek');
+    return races.map( r => (Object.assign({}, r, {weeksToRace: weekDifference(r.startDate,fromDate) })));
+};
 
-    return races.map( r => (Object.assign({}, r, {weeksToRace: Math.round(moment.duration(moment(r.startDate).startOf('isoweek').diff(start)).asWeeks())})));
+var weekDifference= function(fromDate, toDate)
+{
+    let start = moment(toDate).startOf('isoweek');
+    return Math.round(moment.duration(moment(fromDate).startOf('isoweek').diff(start)).asWeeks());
 };
 
 var getTrainingWeeks = function (startDate, endDate) {
@@ -87,27 +98,34 @@ var getTrainingWeeks = function (startDate, endDate) {
     return weeks;
 };
 
-var getClosest = function(date, importance)
+var getClosestRace = function(date, importance)
 {
-    // {weeksToRace: Math.round(moment.duration(moment(r.startDate).startOf('isoweek').diff(start)).asWeeks())};
-    // var max = races.reduce(function(prev, current) {
-    //     if (+current.id < +prev.id) {
-    //         return current;
-    //     } else {
-    //         return prev;
-    //     }
-    // });
+    let importanceRaces = races.filter(r => r.importance == importance);
+    if (importanceRaces.length == 0){
+        return null;
+    }
+
+    let max = importanceRaces.reduce(function(prev, current) {
+        if ((+weekDifference(current.startDate, date) < +weekDifference(prev.startDate, date))) {
+            return (weekDifference(current.startDate, date));
+        } else {
+            return  weekDifference(prev.startDate, date);
+        }
+    });
+    return weekDifference(max.startDate, date);
 }
 
 var getTrainingWeek = function (date) {
     return {
         key: moment(date).year().toString().concat(moment(date).isoWeek()),
-        title: moment(date).format('MMMM Do YYYY'),
+        title: getRacesForWeek(date).length == 0 ? moment(date).startOf('isoweek').format('MMMM Do').concat(' A:', getClosestRace(date, 'A'))  : getRacesForWeek(date).map(r => moment(r.startDate).format('MMMM Do').concat(' - ', r.name).toString()),
         races: getRacesForWeek(date),
         timeToRaces: getWeeksToRaces(date),
-        // closestA: getClosest(date, 'A'),
-        // closestB: getClosest(date, 'B'),
-        // closestC: getClosest(date, 'C'),
-        startDate: moment(date).startOf('isoweek')
+        closestA: getClosestRace(date, 'A'),
+        closestB: getClosestRace(date, 'B'),
+        closestC: getClosestRace(date, 'C'),
+        startDate: moment(date).startOf('isoweek'),
+        isStartOfYear: moment(date).week() == 1 ? true: false
+
     };
 };
