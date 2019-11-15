@@ -8,7 +8,7 @@ import {getWeeks} from "../actions/week-list";
 export class WeekList extends Component {
 
     componentDidMount() {
-        this.props.fetchData(Date.now(), '2020-05-01');
+        this.props.fetchData(Date.now(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)));
     }
 
     render() {
@@ -21,7 +21,7 @@ export class WeekList extends Component {
         }
 
         return (
-            
+                
             <ScrollView style={styles.container}>{console.log(this.props.weekList)}
             {
                 this.props.weekList.map(item => (
