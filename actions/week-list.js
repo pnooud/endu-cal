@@ -42,22 +42,22 @@ var races =
     [
         {
             name: 'Marathon des Sables',
-            startDate: moment('2019-04-05 12:00'),  
-            endDate: moment('2019-04-15 09:00'), 
+            startDate: moment('2020-04-05 12:00'),  
+            endDate: moment('2020-04-15 09:00'), 
             raceType: 'ultra',
             importance: 'A'
         },
         {
             name: 'Chester Ultra',
-            startDate: moment('2019-03-02 08:00'),  
-            endDate: moment('2019-03-02 18:00'), 
+            startDate: moment('2020-03-02 08:00'),  
+            endDate: moment('2020-03-02 18:00'), 
             raceType: 'ultra',
             importance: 'B'
         },
         {
             name: 'Gran Canaria Maratón',
-            startDate: moment('2019-01-27 12:00'),  
-            endDate: moment('2019-01-27 16:00'), 
+            startDate: moment('2020-01-27 12:00'),  
+            endDate: moment('2020-01-27 16:00'), 
             raceType: 'marathon',
             importance: 'C'
         }

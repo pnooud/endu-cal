@@ -8,7 +8,7 @@ import {getWeeks} from "../actions/week-list";
 export class WeekList extends Component {
 
     componentDidMount() {
-        this.props.fetchData(Date.now(), '2019-05-01');
+        this.props.fetchData(Date.now(), '2020-05-01');
     }
 
     render() {
@@ -25,8 +25,8 @@ export class WeekList extends Component {
             <ScrollView style={styles.container}>{console.log(this.props.weekList)}
             {
                 this.props.weekList.map(item => (
-                    <View>
-                    <TouchableOpacity key={item.key} style={styleRace(item.closestA, item.closestB, item.closestC)}>
+                    <View key={item.key}>
+                    <TouchableOpacity style={styleRace(item.closestA, item.closestB, item.closestC)}>
                         <Text>
                             {item.title}
                         </Text>
@@ -101,7 +101,7 @@ WeekList.propTypes = {
 
 const styles = StyleSheet.create({
       button: {
-        alignItems: 'left',
+        alignItems: 'flex-start',
         padding: 10,
         backgroundColor: 'whitesmoke',
         marginTop:5
