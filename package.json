@@ -11,7 +11,7 @@
     "eslint": "^6.6.0",
     "expo": "^35.0.0",
     "expo-cli": "^2.4.0",
-    "moment": "^2.22.2",
+    "moment": "^2.29.2",
     "navbar-native": "^1.6.1",
     "react": "16.8.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",
